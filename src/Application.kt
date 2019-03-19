@@ -55,13 +55,13 @@ fun Application.module(testing: Boolean = false) {
     install(CallLogging)
     install(WebSockets)
 
-    val server = ChatServer()
+    val chatRoom = ChatRoom()
     val uploadDir = File("/tmp")
 
     routing {
 
         webSocket("/ws") {
-            server.memberJoin(this)
+            chatRoom.memberJoin(this)
 
             try {
                 // We starts receiving messages (frames).
@@ -74,13 +74,13 @@ fun Application.module(testing: Boolean = false) {
                         // Now it is time to process the text sent from the user.
                         // At this point we have context about this connection, the session, the text and the server.
                         // So we have everything we need.
-                        server.messageExcludingSender(this, frame.readText())
+                        chatRoom.messageExcludingSender(this, frame.readText())
                     }
                 }
             } finally {
                 // Either if there was an error, of it the connection was closed gracefully.
                 // We notify the server that the member left.
-                server.memberLeft(this)
+                chatRoom.memberLeft(this)
             }
         }
 
@@ -115,7 +115,7 @@ fun Application.module(testing: Boolean = false) {
             val fileUuid = uuid
             if (file != null && fileUuid != null) {
                 Files.move(file.toPath(), file.toPath().resolveSibling("$fileUuid.${file.extension}"))
-                server.broadcast(
+                chatRoom.broadcast(
                     """
                     {
                         "type": "image",

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * Class in charge of the logic of the chat server.
  * It contains handlers to events and commands to send messages to specific users in the server.
  */
-class ChatServer {
+class ChatRoom {
 
     /**
      * Associates a session-id to a set of websockets.
