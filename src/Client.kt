@@ -7,9 +7,10 @@ import okhttp3.WebSocketListener
 
 fun main() {
 
+    val url =  "https://chat-android-service.herokuapp.com" // http://0.0.0.0:8080
     val client = OkHttpClient()
     val request = Request.Builder()
-        .url("http://0.0.0.0:8080/ws")
+        .url("$url/ws")
         .build()
 
     val listener = object : WebSocketListener() {

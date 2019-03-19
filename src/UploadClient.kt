@@ -16,14 +16,15 @@ fun main() {
 
     val client = OkHttpClient()
 
+    val url = "https://chat-android-service.herokuapp.com" // "http://0.0.0.0:8080"
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://0.0.0.0:8080")
+        .baseUrl(url)
         .build()
 
     val api = retrofit.create(UploadApi::class.java)
 
     val uuid = UUID.randomUUID().toString()
-    val file = File("/Users/hannes/Desktop/thomas.png")
+    val file = File("path/to/file.jpg")
 
     val fileReqBody = RequestBody.create(MediaType.parse("image/*"), file)
     // Create MultipartBody.Part using file request-body,file name and part name
